@@ -1,0 +1,29 @@
+<!-- chatbot/chatbot.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="user_input">You:</label>
+        <input type="text" id="user_input" name="user_input">
+        <button type="submit">Send</button>
+    </form>
+
+    <p>Bot: {{ response }}</p>
+
+    {% if 'I don\'t know the answer, can you teach me?' in response %}
+        <form method="POST">
+            {% csrf_token %}
+            <label for="new_answer">Type the answer or "skip" to skip:</label>
+            <input type="text" id="new_answer" name="new_answer">
+            <button type="submit">Submit</button>
+            <input type="hidden" name="user_input" value="{{ user_input }}">
+        </form>
+    {% endif %}
+</body>
+</html>
